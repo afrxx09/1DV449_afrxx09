@@ -1,0 +1,153 @@
+html *{
+	margin:0;
+	padding:0;
+}
+
+html, body{
+	height: 100%;
+	font-family: 'Dosis', sans-serif;
+	color:#222;
+}
+h1,h2,h3,h4,h5,h6{
+	margin:0 0 1em 0;
+}
+
+p{
+	margin:.5em 0;
+	font-size:1em;
+}
+
+/* CLASSES */
+.right{
+	float:right;
+}
+
+.left{
+	float:left;
+}
+
+.clear{
+	clear:both;
+}
+
+
+/* LAYOUT */
+#head{
+	padding:1em 0;
+	background-color:#33c;
+	color:#fff;
+}
+#head .content{
+	width:960px;
+	margin:0 auto;
+}
+
+#head h1{
+	font-family: 'Titillium Web', sans-serif;
+	margin:.25em 0 0 0;
+}
+
+#main{
+	padding:2em 0;
+}
+#wrap{
+	position:relative;
+	min-height: 100%;
+	margin-bottom:-120px;
+}
+
+#footerpush{
+	height:120px;
+}
+#footer{
+	position:relative;
+	height:100px;
+	width:960px;
+	margin:0 auto;
+	padding:10px 0;
+	background-color:#33c;
+	color:#fff;
+	text-align:center;
+}
+
+.content{
+	width:960px;
+	margin:0 auto;
+}
+/* FORM */
+/* FORM ELEMENTS*/
+input, select,textarea, label{
+	display:inline-block;
+}
+
+label{
+	font-weight:bold;
+	padding:5px 0;
+}
+
+select{
+	padding:5px;
+	border:1px solid #33c;
+	outline:0;
+	font-size:1em;
+}
+
+input[type="text"]{
+	padding:5px;
+	border:1px solid #33c;
+	outline:0;
+	font-size:1em;
+}
+input[type="text"]:focus{
+	border:1px solid #3c3;
+	background-color:#efe;
+}
+
+input[type="checkbox"],
+input[type="radio"]{
+	float:left;
+	margin:7px 5px;
+	width:18px;
+	height:18px;
+}
+
+input[type="submit"]{
+	padding:10px 40px;
+	color:#fff;
+	background-color:#33c;
+	font-weight:bold;
+	border:0;
+	outline:0;
+}
+
+input[type="submit"]:hover,
+input[type="submit"]:focus{
+	background-color:#3c3;
+}
+/* FORM CLASSES*/
+form .row{
+	float:left;
+	width:100%;
+	margin:5px 0;
+}
+
+form .col{
+	float:left;
+	margin:0 5px;
+}
+
+form .col.micro{
+	width:80px;
+}
+form .col.mini{
+	width:160px;
+}
+form .col.small{
+	width:240px;
+}
+form .col.medium{
+	width:320px;
+}
+form .col.large{
+	width:400px;
+}
