@@ -1,6 +1,8 @@
 <?php
 
 class Scrape{
+	protected $logDir = '..' . DIRECTORY_SEPARATOR . 'logs' . DIRECTORY_SEPARATOR;
+	
 	public function post($url, $postVars){
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $url);

@@ -151,3 +151,15 @@ form .col.medium{
 form .col.large{
 	width:400px;
 }
+
+
+/**/
+
+.button{
+	display:inline-block;
+	padding:5px 25px;
+	background-color:#3cc;
+	color:white;
+	font-weight:bold;
+	cursor:pointer;
+}

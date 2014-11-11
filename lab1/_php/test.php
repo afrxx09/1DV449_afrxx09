@@ -1,7 +1,7 @@
 <?php
 require_once('scrape.php');
+require_once('course_scrape.php');
 
-$logFileNames = array('courses' => 'courses.json', 'programs' => 'programs.json', 'projects' => 'projects.json', 'subjects' => 'subjects.json');
 $logFileDir = '..' . DIRECTORY_SEPARATOR . 'logs' . DIRECTORY_SEPARATOR;
 
 $url = isset($_POST['url']) ? $_POST['url'] : null;
@@ -49,78 +49,13 @@ foreach($courses as $url){
 	
 }
 
+/*
 $file = fopen($logFileDir . $logFileNames['courses'], 'w');
 $content = json_encode($coursesInformation, JSON_PRETTY_PRINT);
 fwrite($file, $content);
 fclose($file);
 exit;
-
-function getHeader($xpath){
-	$q = '//div[@id="header-wrapper"]//h1//a';
-	$nodeList = $xpath->query($q);
-	return ($nodeList->length > 0) ?  trim($nodeList->item(0)->nodeValue) : 'no information';
-}
-
-function getURL($xpath){
-	$q = '//div[@id="header-wrapper"]//h1//a';
-	$nodeList = $xpath->query($q);
-	return ($nodeList->length > 0) ? trim($nodeList->item(0)->getAttribute('href')) : 'no information';
-}
-
-function getCourseCode($xpath){
-	$q = '//div[@id="header-wrapper"]//ul/li[last()]/a';
-	$nodeList = $xpath->query($q);
-	return ($nodeList->length > 0) ? trim($nodeList->item(0)->nodeValue) : 'no information';
-}
-
-function getSyllabus($xpath){
-	$q = '//*[@id="navigation"]//ul[@class="menu"]//a';
-	$nodeList = $xpath->query($q);
-	foreach($nodeList as $node){
-		$href = $node->getAttribute('href');
-		if(preg_match('/templatetype\=coursesyllabus/', $href)){
-			return trim($href);
-		}
-	}
-	return 'no information';
-}
-
-function getInfoText($xpath){
-	$q = '//*[@id="content"]//*[@class="entry-content"]';
-	$nodeList = $xpath->query($q);
-	return ($nodeList->length > 0) ? trim($nodeList->item(0)->textContent) : 'no information';
-}
-
-function getLastPost($xpath){
-	$q = '//*[@id="content"]//*[contains(@class, "type-post")]//*[@class="entry-title"]';
-	$nodeList = $xpath->query($q);
-	$head = ($nodeList->length > 0) ? $nodeList->item(0)->textContent : 'no information';
-	
-	$q = '//*[@id="content"]//*[contains(@class, "type-post")]//*[@class="entry-byline"]';
-	$nodeList = $xpath->query($q);
-	if($nodeList->length > 0){
-		$firstPostBy = $nodeList->item(0);
-		$date = trim($firstPostBy->firstChild->textContent);
-		preg_match('/\d{4}-\d{2}-\d{2} \d{2}:\d{2}/', $date, $matches);
-		$date = $matches[0];
-		$name = $firstPostBy->firstChild->nextSibling->textContent;
-		return array('title' => $head, 'date' => $date, 'by' => $name);
-	}
-	
-	return array('title' => $head, 'date' => 'no information', 'by' => 'no information');
-}
-
-
-/*
-foreach($logFileNames as $key => $logFile){
-	$file = fopen($logFileDir . $logFile, 'w');
-	$content = json_encode($$key);
-	fwrite($file, $content);
-	fclose($file);
-}
 */
-
-echo json_encode(array('courses' => $courses, 'projects' => $projects, 'programs' => $programs, 'subjects' => $subjects));
 
 
 function getAllNodes($url){
