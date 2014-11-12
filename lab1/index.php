@@ -56,33 +56,41 @@
 					<div id="stats">
 						<div id="url-list-stats">
 							<h2>URL - lista</h2>
-							<div>
-								<span class="update-links button" data-ajax-action="asd">Uppdatera länkar</span>
+							<p>URL-lista till alla kurser, program, projekt m.m. på Coursepress. </p>
+							<p class="error"></p>
+							<div class="row">
+								<div class="label">Senast updaterad:</div>
+								<div class="data last-updated">...</div>
 							</div>
-							<div>
-								<div>Senast updaterad:</div>
-								<div class="last-updated">...</div>
+							<div class="row">
+								<div class="label">Totalt antal länkar:</div>
+								<div class="data total-links">...</div>
 							</div>
-							<div>
-								<div>Totalt antal länkar:</div>
-								<div class="total-links">...</div>
+							<div class="row">
+								<div class="label">Kurs-länkar:</div>
+								<div class="data course-links">...</div>
 							</div>
-							<div>
-								<div>Kurs-länkar:</div>
-								<div class="course-links">...</div>
+							<div class="row">
+								<div class="label">Program-länkar:</div>
+								<div class="data program-links">...</div>
 							</div>
-							<div>
-								<div>Program-länkar:</div>
-								<div class="program-links">...</div>
+							<div class="row">
+								<div class="label">Projekt-länkar:</div>
+								<div class="data project-links">...</div>
 							</div>
-							<div>
-								<div>Projekt-länkar:</div>
-								<div class="projekt-links">...</div>
+							<div class="row">
+								<div class="label">Övriga länkar:</div>
+								<div class="data other-links">...</div>
 							</div>
-							<div>
-								<div>Övriga länkar:</div>
-								<div class="other-links">...</div>
+							<div class="row">
+								<div class="label">Länk till fil:</div>
+								<div class="data file-path">...</div>
 							</div>
+							<div class="clear"></div>
+						</div>
+						<div>
+							<span id="update-link-list" class="button" data-ajax-action="update_link_list">Uppdatera länkar</span>
+							<span class="loading">Laddar...</span>
 						</div>
 					</div>
 				

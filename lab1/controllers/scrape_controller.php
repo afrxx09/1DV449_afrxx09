@@ -1,23 +1,23 @@
 <?php
 
 require_once('ajax_controller.php');
-require_once('..\models\scrape_model.php');
+require_once('..' . DS . 'models' . DS . 'scrape_model.php');
 
 class ScrapeController extends Ajax{
 	private $scrapeModel;
 	
 	public function __construct(){
-		parent::__construct();
 		$this->scrapeModel = new ScrapeModel();
+		parent::__construct();
 	}
 	
 	public function doAction(){
 		switch($this->action){
-			case 'asd':
-				return $this->asd();
+			case 'get_link_list_stats':
+				return $this->getLinkListStats();
 				break;
-			case 'qwe':
-				return $this->qwe();
+			case 'update_link_list':
+				return $this->updateLinkList();
 				break;
 			default:
 				return $this->defaultError();
@@ -25,12 +25,12 @@ class ScrapeController extends Ajax{
 		}
 	}
 	
-	private function asd(){
-		return array('min_key' => 'asd');
+	private function getLinkListStats(){
+		return $this->scrapeModel->getLinkListStats();
 	}
 	
-	private function qwe(){
-		return array('error' => true, 'errorMessage' => 'qwe-fail.');
+	private function updateLinkList(){
+		return $this->scrapeModel->updateLinkList();
 	}
 }
 

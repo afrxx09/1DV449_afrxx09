@@ -158,8 +158,49 @@ form .col.large{
 .button{
 	display:inline-block;
 	padding:5px 25px;
-	background-color:#3cc;
+	background-color:#33c;
 	color:white;
 	font-weight:bold;
 	cursor:pointer;
+}
+
+.button:hover{
+	background-color:#3c3;
+}
+
+.loading{
+	display:none;
+}
+
+.error{
+	background-color:#fee;
+	border:1px solid #f00;
+}
+
+#url-list-stats{
+	width:320px;
+	margin-bottom:10px;
+}
+
+#url-list-stats .row{
+	float:left;
+	width:100%;
+	background-color:#eef;
+}
+
+#url-list-stats .row:nth-child(odd){
+	background-color:#e6e6ff;
+}
+
+#url-list-stats .label{
+	float:left;
+	width:150px;
+	padding:5px;
+	font-weight:bold;
+}
+
+#url-list-stats .data{
+	float:left;
+	width:150px;
+	padding:5px;
 }

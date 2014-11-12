@@ -1,4 +1,7 @@
 <?php
+
+define('DS', DIRECTORY_SEPARATOR);
+
 require_once('i_action_switch.php');
 
 abstract class Ajax implements IActionSwitch{
