@@ -124,7 +124,12 @@ class ScrapeModel{
 		);
 		
 		$file = fopen($this->logDir . $this->linkListFile, 'w');
-		$content = json_encode($linkList, JSON_PRETTY_PRINT);
+		try{
+			$content = json_encode($linkList, JSON_PRETTY_PRINT);
+		}
+		catch(Exception $e){
+			$content = json_encode($linkList);
+		}
 		fwrite($file, $content);
 		fclose($file);
 		return true;
