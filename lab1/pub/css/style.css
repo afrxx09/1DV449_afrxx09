@@ -168,7 +168,7 @@ form .col.large{
 	background-color:#3c3;
 }
 
-.loading{
+#link-list-loading{
 	display:none;
 }
 
@@ -177,30 +177,33 @@ form .col.large{
 	border:1px solid #f00;
 }
 
-#url-list-stats{
+#url-list-info{
 	width:320px;
 	margin-bottom:10px;
 }
 
-#url-list-stats .row{
+#url-list-info .row{
 	float:left;
 	width:100%;
 	background-color:#eef;
 }
 
-#url-list-stats .row:nth-child(odd){
+#url-list-info .row:nth-child(odd){
 	background-color:#e6e6ff;
 }
 
-#url-list-stats .label{
+#url-list-info .label{
 	float:left;
-	width:150px;
-	padding:5px;
+	width:130px;
+	padding:5px 10px;
 	font-weight:bold;
+	text-align:right;
 }
 
-#url-list-stats .data{
+#url-list-info .data{
 	float:left;
-	width:150px;
+	width:160px;
 	padding:5px;
+	font-family: 'Ubuntu Mono', 'Courier New';
+	font-size: .9em;
 }

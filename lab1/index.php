@@ -9,6 +9,7 @@
 		
 		<link href='http://fonts.googleapis.com/css?family=Titillium+Web' rel='stylesheet' type='text/css'>
 		<link href='http://fonts.googleapis.com/css?family=Dosis' rel='stylesheet' type='text/css'>
+		<link href='http://fonts.googleapis.com/css?family=Ubuntu+Mono' rel='stylesheet' type='text/css'>
 	</head>
 
 	<body>
@@ -54,43 +55,20 @@
 					
 					
 					<div id="stats">
-						<div id="url-list-stats">
+						<div id="url-list-info">
 							<h2>URL - lista</h2>
 							<p>URL-lista till alla kurser, program, projekt m.m. på Coursepress. </p>
 							<p class="error"></p>
-							<div class="row">
-								<div class="label">Senast updaterad:</div>
-								<div class="data last-updated">...</div>
+							<div id="url-list-loading">
+								<p>Laddar ....</p>
 							</div>
-							<div class="row">
-								<div class="label">Totalt antal länkar:</div>
-								<div class="data total-links">...</div>
+							<div id="url-list-container">
+								
 							</div>
-							<div class="row">
-								<div class="label">Kurs-länkar:</div>
-								<div class="data course-links">...</div>
-							</div>
-							<div class="row">
-								<div class="label">Program-länkar:</div>
-								<div class="data program-links">...</div>
-							</div>
-							<div class="row">
-								<div class="label">Projekt-länkar:</div>
-								<div class="data project-links">...</div>
-							</div>
-							<div class="row">
-								<div class="label">Övriga länkar:</div>
-								<div class="data other-links">...</div>
-							</div>
-							<div class="row">
-								<div class="label">Länk till fil:</div>
-								<div class="data file-path">...</div>
-							</div>
-							<div class="clear"></div>
 						</div>
 						<div>
 							<span id="update-link-list" class="button" data-ajax-action="update_link_list">Uppdatera länkar</span>
-							<span class="loading">Laddar...</span>
+							<span id="link-list-loading">Laddar...</span>
 						</div>
 					</div>
 				

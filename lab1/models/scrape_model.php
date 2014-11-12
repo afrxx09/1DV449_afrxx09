@@ -11,11 +11,13 @@ class ScrapeModel{
 		$this->logDir = '..' . DS . 'logs' . DS;
 	}
 	
-	public function getLinkListStats(){
+	public function getLinkListInfo(){
 		if(file_exists($this->logDir . $this->linkListFile)){
 			$data = json_decode(file_get_contents($this->logDir . $this->linkListFile));
 			return array(
 				'lastUpdated' => $data->lastUpdated,
+				'scrapingTime' => $data->scrapingTime,
+				'requestCount' => $data->requestCount,
 				'totalCount' => $data->totalCount,
 				'courseCount' => $data->courseCount,
 				'programCount' => $data->programCount,
@@ -24,15 +26,19 @@ class ScrapeModel{
 				'filePath' => $this->logPath . $this->linkListFile
 			);
 		}
-		return array('error' => true, 'errorMessage' => 'Det finns ingen fil med länkar.');
+		return false;
 		
 	}
 	
 	public function updateLinkList(){
 		try{
-			$links = $this->scrapeLinks($this->url);
-			if($this->saveLinkList($links)){
-				return $this->getLinkListStats();
+			$start = microtime(true);
+			$count = 0;
+			$links = $this->scrapeLinks($this->url, $count);
+			$end = microtime(true);
+			$time = round($end - $start, 6);
+			if($this->saveLinkList($links, $time, $count)){
+				return $this->getLinkListInfo();
 			}
 		}
 		catch(Exception $e){
@@ -40,7 +46,8 @@ class ScrapeModel{
 		}
 	}
 	
-	private function scrapeLinks($url){
+	private function scrapeLinks($url ,&$count){
+		$count++;
 		$html = $this->getPageContent($url);
 		
 		$dd = new DomDocument();
@@ -52,7 +59,7 @@ class ScrapeModel{
 		$nextPageURL = $this->getNextPageURL($xpath);
 		
 		if($nextPageURL !== null){
-			$nextPageLinks = $this->scrapeLinks($nextPageURL);
+			$nextPageLinks = $this->scrapeLinks($nextPageURL, $count);
 			$links = array_merge($links, $nextPageLinks);
 			
 		}
@@ -101,11 +108,13 @@ class ScrapeModel{
 		return null;
 	}
 	
-	private function saveLinkList($links){
+	private function saveLinkList($links, $time, $count){
 		$sortedLinks = $this->sortLinks($links);
 		
 		$linkList = array(
 			'lastUpdated' => date("Y-m-d H:i:s"),
+			'scrapingTime' => $time,
+			'requestCount' => $count,
 			'totalCount' => count($links),
 			'courseCount' => count($sortedLinks['courses']),
 			'programCount' => count($sortedLinks['programs']),
