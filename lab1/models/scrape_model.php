@@ -5,10 +5,17 @@ class ScrapeModel{
 	private $logDir;
 	private $logPath = 'logs/';
 	private $linkListFile = 'link_list.json';
-	private $linkSort = array('courses' => '/.se\/kurs\//', 'programs' => '/.se\/program\//', 'projects' => '/.se\/projekt\//', 'other' => null);
+	private $linkSort;
 	
 	public function __construct(){
 		$this->logDir = '..' . DS . 'logs' . DS;
+		$this->linkSort = array(
+			'courses' => '/.se\/kurs\//',
+			'programs' => '/.se\/program\//',
+			'projects' => '/.se\/projekt\//',
+			'subjects' => '/.se\/subject\//',
+			'other' => null
+		);
 	}
 	
 	public function getLinkListInfo(){
@@ -22,6 +29,7 @@ class ScrapeModel{
 				'courseCount' => $data->courseCount,
 				'programCount' => $data->programCount,
 				'projectCount' => $data->projectCount,
+				'subjectCount' => $data->subjectCount,
 				'otherCount' => $data->otherCount,
 				'filePath' => $this->logPath . $this->linkListFile
 			);
@@ -30,6 +38,31 @@ class ScrapeModel{
 		
 	}
 	
+	public function getScrapeFilesInfo(){
+		$scrapeFilesInfo = array();
+		foreach($this->linkSort as $type => $regex){
+			$logFile = $this->logDir . $type . '.json';
+			if(file_exists($logFile)){
+				$data = json_decode(file_get_contents($logFile));
+				$scrapeFilesInfo[$type] = array(
+					'lastUpdated' => $data->lastUpdated,
+					'scrapingTime' => $data->scrapingTime,
+					'requestCount' => $data->requestCount,
+					'filePath' => 'logs/' . $type . '.json'
+				);
+			}
+			else{
+				$scrapeFilesInfo[$type] = array(
+					'lastUpdated' => 'unknown',
+					'scrapingTime' => 'unknown',
+					'requestCount' => 'unknown',
+					'filePath' => 'no file'
+				);
+			}
+		}
+		return $scrapeFilesInfo;
+	}
+
 	public function updateLinkList(){
 		try{
 			$start = microtime(true);
@@ -119,6 +152,7 @@ class ScrapeModel{
 			'courseCount' => count($sortedLinks['courses']),
 			'programCount' => count($sortedLinks['programs']),
 			'projectCount' => count($sortedLinks['projects']),
+			'subjectCount' => count($sortedLinks['subjects']),
 			'otherCount' => count($sortedLinks['other']),
 			'links' => $sortedLinks
 		);

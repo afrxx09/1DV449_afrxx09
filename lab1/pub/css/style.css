@@ -111,19 +111,6 @@ input[type="radio"]{
 	height:18px;
 }
 
-input[type="submit"]{
-	padding:10px 40px;
-	color:#fff;
-	background-color:#33c;
-	font-weight:bold;
-	border:0;
-	outline:0;
-}
-
-input[type="submit"]:hover,
-input[type="submit"]:focus{
-	background-color:#3c3;
-}
 /* FORM CLASSES*/
 form .row{
 	float:left;
@@ -154,10 +141,15 @@ form .col.large{
 
 
 /**/
-
+#info,
+#files{
+	float:left;
+	width:400px;
+	padding:10px;
+}
 .button{
 	display:inline-block;
-	padding:5px 25px;
+	padding:10px 30px;
 	background-color:#33c;
 	color:white;
 	font-weight:bold;
@@ -168,31 +160,46 @@ form .col.large{
 	background-color:#3c3;
 }
 
-#link-list-loading{
+#link-list-loading,
+#file-list-loading{
 	display:none;
 }
 
 .error{
 	background-color:#fee;
 	border:1px solid #f00;
+	display:none;
 }
 
-#url-list-info{
+#url-list-info,
+#file-list-info{
 	width:320px;
 	margin-bottom:10px;
 }
 
-#url-list-info .row{
+#file-list-info .group{
+	float:left;
+	width:100%;
+	margin:5px 0;
+}
+
+#url-list-info .row,
+#file-list-info .row{
 	float:left;
 	width:100%;
 	background-color:#eef;
 }
+#file-list-info .row h3{
+	margin:5px 10px;
+}
 
-#url-list-info .row:nth-child(odd){
+#url-list-info .row:nth-child(odd),
+#file-list-info .row:nth-child(odd){
 	background-color:#e6e6ff;
 }
 
-#url-list-info .label{
+#url-list-info .label,
+#file-list-info .label{
 	float:left;
 	width:130px;
 	padding:5px 10px;
@@ -200,10 +207,22 @@ form .col.large{
 	text-align:right;
 }
 
-#url-list-info .data{
+#url-list-info .data,
+#file-list-info .data{
 	float:left;
 	width:160px;
 	padding:5px;
 	font-family: 'Ubuntu Mono', 'Courier New';
 	font-size: .9em;
+}
+
+#form-container{
+	margin-top:10px;
+	padding:10px 0;
+	border-top:1px solid #33e;
+	border-bottom:1px solid #33e;
+}
+
+#my-page-form{
+	border-top:1px solid #33e;
 }

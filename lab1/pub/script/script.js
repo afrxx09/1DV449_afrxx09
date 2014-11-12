@@ -4,40 +4,72 @@ var scraper = {
 		self = this;
 		this.bind();
 		this.updateLinkStats();
+		this.updateFileStats();
 	},
 	
 	bind : function(){
-		$('#scraper-form').on('submit', function(e){
+		$('#scrape-form-submit').on('click', function(e){
 			self.startScrape(e)
 		});
 		$('#update-link-list').on('click', function(e){
 			self.updateLinks(e);
 		});
+		$('#scrape-my-pages-submit').on('click', function(){
+			self.scrapeMyPages();
+		});
 	},
 	
 	
 	startScrape : function(e){
-		e.preventDefault();
-		alert('disabled');
-		/*
-		var url = $('#url').val();
-		var courses = $('#courses').is('checked');
+		var pageTypesList = '';
+		pageTypesList += ($('#courses').is(':checked')) ? ',courses': '';
+		pageTypesList += ($('#subjects').is(':checked')) ? ',subjects': '';
+		pageTypesList += ($('#programs').is(':checked')) ? ',programs': '';
+		pageTypesList += ($('#projects').is(':checked')) ? ',projects': '';
+		pageTypesList += ($('#other').is(':checked')) ? ',other': '';
+		pageTypesList = pageTypesList.substring(1);
+		var scrapeData = {
+			pageTypes : pageTypesList,
+			sort : $('#sort-courses').is(':checked'),
+			scrapeLimit : $('#scrape-limit').val()
+		}
+		$('#file-list-loading').show();
+		$('#file-list-container').hide();
 		$.ajax({
 			type: 'POST',
-			url: 'php/ajax.php',
-			data: { 'url': url, 'courses': courses },
+			url: 'controllers/scrape_controller.php?ajax=scrape',
+			data: scrapeData,
 			dataType : 'json'
 		}).done(function(response) {
 				self.scrapeDone(response);
 		});
-		*/
+		
 	},
 	
-	/*
+	
 	scrapeDone : function(json){
+		self.updateFileStatsDone(json);
+	},
+
+	scrapeMyPages : function(){
+		var myPages = {
+			username : $('#my-pages-username').val(),
+			password : $('#my-pages-password').val()
+		};
+		$.ajax({
+			type: 'POST',
+			url: 'controllers/scrape_controller.php?ajax=scrape_my_pages',
+			data: myPages,
+			dataType : 'json'
+		}).done(function(response) {
+				self.scrapeMyPagesDone(response);
+		});
+	},
+
+	scrapeMyPagesDone : function(json){
 		console.log(json);
 	},
-	*/
+	
 	updateLinks : function(e){
 		var action = $(e.target).data('ajax-action');
 		$('#link-list-loading').fadeIn(400);
@@ -66,7 +98,6 @@ var scraper = {
 	},
 	
 	updateLinkStats : function(){
-		$('#url-list-info .error').hide();
 		$('#url-list-loading').show();
 		$('#url-list-container').hide();
 		$.ajax({
@@ -87,6 +118,31 @@ var scraper = {
 			$('#url-list-container').html(json.html);
 			$('#url-list-loading').fadeOut(200, function(){
 				$('#url-list-container').fadeIn(200);
+			});
+		}
+	},
+
+	updateFileStats : function(){
+		$('#file-list-loading').show();
+		$('#file-list-container').hide();
+		$.ajax({
+			type: 'POST',
+			url: 'controllers/scrape_controller.php?ajax=get_file_list_stats',
+			dataType : 'json'
+		}).done(function(response) {
+				self.updateFileStatsDone(response);
+		});
+	},
+	
+	updateFileStatsDone : function(json){
+		if(json.error){
+			$('#file-list-info .error').html(json.errorMessage);
+			$('#file-list-info .error').show();
+		}
+		else{
+			$('#file-list-container').html(json.html);
+			$('#file-list-loading').fadeOut(200, function(){
+				$('#file-list-container').fadeIn(200);
 			});
 		}
 	}
