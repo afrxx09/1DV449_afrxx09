@@ -99,7 +99,7 @@
 										<label for="my-pages-password">Lösenord</label>
 									</div>
 									<div class="col mini">
-										<input type="text" name="my-pages-password" id="my-pages-password" />
+										<input type="password" name="my-pages-password" id="my-pages-password" />
 									</div>
 								</div>
 							</div>

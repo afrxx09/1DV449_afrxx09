@@ -3,6 +3,7 @@
 require_once('ajax_controller.php');
 require_once('..' . DS . 'models' . DS . 'scrape_model.php');
 require_once('..' . DS . 'models' . DS . 'scrape_page_model.php');
+require_once('..' . DS . 'models' . DS . 'my_pages_scraper_model.php');
 require_once('..' . DS . 'views' . DS . 'scrape_view.php');
 
 class ScrapeController extends Ajax{

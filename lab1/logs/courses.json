@@ -1,6 +1,6 @@
 {
-    "lastUpdated": "2014-11-12 14:57:40",
-    "scrapingTime": 19.382108,
+    "lastUpdated": "2014-11-12 23:17:02",
+    "scrapingTime": 26.778532,
     "requestCount": 68,
     "data": [
         {
@@ -22,8 +22,8 @@
             "syllabus": "http:\/\/prod.kursinfo.lnu.se\/utbildning\/GenerateDocument.ashx?templatetype=coursesyllabus&code=1DV433&documenttype=pdf&lang=sv",
             "infoText": "Fakta\r\n            \r\n                \u00c4mne:\u00a0DatavetenskapNiv\u00e5:\u00a0Grundniv\u00e5H\u00f6gskolepo\u00e4ng:\u00a07,5Kurskod:\u00a01DV433            \r\n        Strukturerad programmering med C++\nI denna grundkurs l\u00e4r du dig skapa console-baserade datorprogram p\u00e5 ett procedurorienterat s\u00e4tt med programspr\u00e5ket C++. Kursen best\u00e5r av teorimoment (3,5p) och praktiska till\u00e4mpningar (4p). Allt kursmaterial utom kurslitteraturen h\u00e4mtas p\u00e5 denna webbplats \u2013 logga in med ditt studentkonto f\u00f6r att f\u00e5 tillg\u00e5ng till detta. (Bara\u00a0registrerade kursdeltagare\u00a0har tillg\u00e5ng till diskussionsgrupp eller gruppindelningar -\u00a0anonyma bes\u00f6kare har\u00a0begr\u00e4nsad \u00e5tkomst till\u00a0webbmaterialet.)",
             "lastPost": {
-                "title": "Schema\u00e4ndring \u2026",
-                "date": "2014-11-07 01:26",
+                "title": "Inf\u00f6r f\u00f6rsta examinationen",
+                "date": "2014-11-12 05:12",
                 "by": "Anne Norling"
             }
         },
@@ -82,8 +82,8 @@
             "syllabus": "http:\/\/prod.kursinfo.lnu.se\/utbildning\/GenerateDocument.ashx?templatetype=coursesyllabus&code=1DV403&documenttype=pdf&lang=sv",
             "infoText": "Klientsideutveckling med JavaScript\nKursen Webbteknik I \u00e4r en kurs som inom ramen f\u00f6r programmen \u201dWebbprogrammerare\u201d och \u201dUtvecklare av digitala tj\u00e4nster\u201d vid Linn\u00e9universitetet i Kalmar och genomf\u00f6rs p\u00e5 campus s\u00e5v\u00e4l som distans.\nEn av de senaste \u00e5rens webbtrender \u00e4r att fler och fler applikationen flyttar fr\u00e5n den lokala datorn till webben vilket inneb\u00e4r att anv\u00e4ndandet och betydelsen av Javascript \u00f6kar. Detta st\u00e4ller h\u00f6gre krav p\u00e5 webbutvecklaren i form av disciplin och kunnande.\nKursen behandlar Javascript fr\u00e5n grunden och tar dig fr\u00e5n \u201dHello World\u201d till att skapa en fullfj\u00e4drad Javascriptapplikation i form av ett webbbaserat f\u00f6nsterhanteringssystem med Ajax. Genomg\u00e5ende l\u00e4r du dig ett modernt arbetss\u00e4tt och betydelsen av att skapa tillg\u00e4ngliga och s\u00e4kra applikationer. I slutprojektet har du m\u00f6jlighet att f\u00f6rkovra dig i ett javascript bibliotek s\u00e5 som exempelvis jQuery, men kursens m\u00e5l \u00e4r att l\u00e4ra sig JavaScript fr\u00e5n grunden.\nP\u00e5 denna webbplats hittar du all information kring kursen. \u00c4r du student p\u00e5 kursen b\u00f6r du logga in f\u00f6r att f\u00e5 tillg\u00e5ng till gruppindelningar, forum etc.\n\u00c4r du h\u00e4r som bes\u00f6kare kan du f\u00f6lja med i kursen genom att f\u00f6lja materialet p\u00e5 denna webbplats. F\u00f6rel\u00e4sningar publiceras i takt med att de genomf\u00f6rs p\u00e5 campus i Kalmar.",
             "lastPost": {
-                "title": "Missa inte introduktionsf\u00f6rel\u00e4sningen",
-                "date": "2014-11-04 03:54",
+                "title": "Programmeringsstuga",
+                "date": "2014-11-12 04:52",
                 "by": "Johan Leitet"
             }
         },
@@ -94,9 +94,9 @@
             "syllabus": "http:\/\/prod.kursinfo.lnu.se\/utbildning\/GenerateDocument.ashx?templatetype=coursesyllabus&code=1DV435&documenttype=pdf&lang=sv",
             "infoText": "Klientbaserad webbutveckling \u2013 Linn\u00e9universitetet\nI denna kurs kommer fokus ligga p\u00e5 teknik och praktik kring byggandet av webbplatser med fokus p\u00e5 klientbaserad webbutveckling. Kursen fokuserar dels p\u00e5 modern utveckling med HTML5 och CSS samt \u00e4ven p\u00e5 grundl\u00e4ggande programmering med JavaScript som programmeringsspr\u00e5k. Kursen avslutas med ett st\u00f6rre projekt d\u00e4r dessa tekniker anv\u00e4nds.",
             "lastPost": {
-                "title": "Ytterligare f\u00f6rtydling",
-                "date": "2014-11-10 04:29",
-                "by": "John H\u00e4ggerud"
+                "title": "Programmeringsstuga",
+                "date": "2014-11-12 06:09",
+                "by": "Johan Leitet"
             }
         },
         {

@@ -1,6 +1,7 @@
 <?php
 
 class ScrapePageModel{
+	private $logDir;
 	private $type;
 	private $fileName;
 	private $sort;
@@ -9,6 +10,7 @@ class ScrapePageModel{
 	private $xpath;
 
 	public function __construct($pageType, $sort = false, $limit = 0){
+		$this->logDir = '..' . DS . 'logs' . DS;
 		$this->type = $pageType;
 		$this->fileName = $pageType . '.json';
 		$this->sort = $sort;
@@ -17,7 +19,7 @@ class ScrapePageModel{
 	}
 
 	private function getURLs(){
-		$linkListLog = '..\logs\link_list.json';
+		$linkListLog = $this->logDir . 'link_list.json';
 		if(file_exists($linkListLog)){
 			$data = json_decode(file_get_contents($linkListLog));
 			$urls = $data->links->{$this->type};
@@ -81,7 +83,7 @@ class ScrapePageModel{
 	}
 
 	private function saveData($result){
-		$file = fopen('..\logs\\' . $this->fileName, 'w');
+		$file = fopen($this->logDir . $this->fileName, 'w');
 		try{
 			$content = json_encode($result, JSON_PRETTY_PRINT);
 		}
