@@ -2,4 +2,4 @@
 
 ##Laboration 1 - webskrapa
 
-[www.aegzor.se/1dv449/lab1/](Länk till live version)
+[Länk till live version](http://www.aegzor.se/1dv449/lab1/)
