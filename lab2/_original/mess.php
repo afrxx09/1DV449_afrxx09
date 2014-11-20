@@ -1,5 +1,6 @@
 <?php
 	require_once("get.php");
+
 ?>
 <!DOCTYPE html>
 <html lang="sv">
@@ -141,7 +142,7 @@ background-color: #F3FCE4;
   </head>
 	  
 	  	<body background="http://www.lockley.net/backgds/big_leo_minor.jpg">        
-        
+
         <div id="container">
             
             <div id="messageboard">

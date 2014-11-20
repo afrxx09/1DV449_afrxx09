@@ -8,7 +8,7 @@ var MessageBoard = {
     {
 	
 		    MessageBoard.textField = document.getElementById("inputText");
-            /*Ta bort*/MessageBoard.nameField = document.getElementById("inputName");
+		    MessageBoard.nameField = document.getElementById("inputName");
             MessageBoard.messageArea = document.getElementById("messagearea");
     
             // Add eventhandlers    
@@ -62,7 +62,6 @@ var MessageBoard = {
         $.ajax({
 			type: "GET",
 		  	url: "functions.php",
-            //Använd namnet från sessionen istället för att posta det.
 		  	data: {function: "add", name: MessageBoard.nameField.value, message:MessageBoard.textField.value}
 		}).done(function(data) {
 		  alert("Your message is saved! Reload the page for watching it");
