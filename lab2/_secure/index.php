@@ -20,7 +20,7 @@
 
     <div class="container">
 
-      <form class="form-signin" action="check.php" method="POST">
+      <form class="form-signin" action="login.php" method="POST">
         <h2 class="form-signin-heading">Log in</h2>
         <input value="" name="username" type="text" class="form-control" placeholder="Användarnamn" required autofocus>
         <input value="" name="password" type="password" class="form-control" placeholder="Password" required>

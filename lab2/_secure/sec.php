@@ -20,23 +20,23 @@ function checkUser() {
 		sec_session_start();
 	}
 
-	if(!isset($_SESSION["user"])) {header('HTTP/1.1 401 Unauthorized'); die();}
-
-	$user = getUser($_SESSION["user"]);
-	$un = $user[0]["username"];
-
-	if(isset($_SESSION['login_string'])) {
-		if($_SESSION['login_string'] !== hash('sha512', "123456" + $un) ) {
-			header('HTTP/1.1 401 Unauthorized'); die();
-		}
+	if(!isset($_SESSION["username"])) {
+		header('HTTP/1.1 401 Unauthorized');
+		header('location: index.php');
 	}
-	else {
-		header('HTTP/1.1 401 Unauthorized'); die();
+
+	if(!isset($_SESSION['login_string'])) {
+		header('HTTP/1.1 401 Unauthorized');
+		header('location: index.php');
+	}
+	if($_SESSION['login_string'] !==  generateHash()) {
+		header('HTTP/1.1 401 Unauthorized');
+		header('location: index.php');
 	}
 	return true;
 }
 
-function isUser($u, $p) {
+function authUser($u, $p) {
 	$db = null;
 
 	try {
@@ -46,59 +46,20 @@ function isUser($u, $p) {
 	catch(PDOEception $e) {
 		die("Del -> " .$e->getMessage());
 	}
-	$q = "SELECT id FROM users WHERE username = '$u' AND password = '$p'";
+	$q = "SELECT * FROM users WHERE username = '$u' AND password = '$p'";
 
 	$result;
 	$stm;
 	try {
 		$stm = $db->prepare($q);
 		$stm->execute();
-		$result = $stm->fetchAll();
-		if(!$result) {
-			return "Could not find the user";
-		}
+		$r = $stm->fetch(PDO::FETCH_ASSOC);
+		return (!empty($r)) ? $r : null;
 	}
-	catch(PDOException $e) {
-		echo("Error creating query: " .$e->getMessage());
-		return false;
-	}
-	return $result;
-	
+	catch(PDOException $e) {}
+	return false;
 }
 
-function getUser($user) {
-	$db = null;
-
-	try {
-		$db = new PDO("sqlite:db.db");
-		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	}
-	catch(PDOEception $e) {
-		die("Del -> " .$e->getMessage());
-	}
-	$q = "SELECT * FROM users WHERE username = '$user'";
-
-	$result;
-	$stm;
-	try {
-		$stm = $db->prepare($q);
-		$stm->execute();
-		$result = $stm->fetchAll();
-	}
-	catch(PDOException $e) {
-		echo("Error creating query: " .$e->getMessage());
-		return false;
-	}
-
-	return $result;
+function generateHash(){
+	return hash('sha512', "123456" + $_SESSION["username"]);
 }
-
-function logout() {
-
-	if(!session_id()) {
-		sec_session_start();
-	}
-	session_end();
-	header('Location: index.php');
-}
-

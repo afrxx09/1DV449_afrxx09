@@ -12,7 +12,6 @@ var MessageBoard = {
 
         // Add eventhandlers
         document.getElementById("buttonSend").onclick = function(e) {MessageBoard.sendMessage(); return false;}
-        document.getElementById("buttonLogout").onclick = function(e) {MessageBoard.logout(); return false;}
 
         MessageBoard.textField.onkeypress = function(e){ 
             if(!e) var e = window.event;
@@ -21,21 +20,26 @@ var MessageBoard = {
                 return false;
             }
         }
+        
+        $('#messagearea').on('click', 'a', function(e){
+            var id = $(e.target).closest('.message').data('message-id');
+            MessageBoard.showTime(id);
+        });
     },
     getMessages:function() {
         $.ajax({
-			type: "GET",
-			url: "functions.php",
-			data: {function: "getMessages"},
+			type: "POST",
+			url: "ajax.php",
+			data: {'action': "getMessages"},
             dataType : 'json'
 		}).done(function(json){
-			for(var mess in json) {
-				var obj = json[mess];
-			    var text = obj.name +" said:\n" +obj.message;
-				var mess = new Message(text, new Date());
+            for(var i in json.messages){
+                var msg = json.messages[i];
+                var text = msg.name +" said:\n" + msg.message;
+                var mess = new Message(text, new Date());
                 var messageID = MessageBoard.messages.push(mess)-1;
                 MessageBoard.renderMessage(messageID);
-			}
+            }
 			document.getElementById("nrOfMessages").innerHTML = MessageBoard.messages.length;
 		});
     },
@@ -45,12 +49,16 @@ var MessageBoard = {
         
         // Make call to ajax
         $.ajax({
-			type: "GET",
-		  	url: "functions.php",
+			type: "POST",
+		  	url: "ajax.php",
             //Använd namnet från sessionen istället för att posta det.
-		  	data: {function: "add", name: MessageBoard.nameField.value, message:MessageBoard.textField.value}
-		}).done(function(data) {
-		  alert("Your message is saved! Reload the page for watching it");
+		  	data: {'action' : 'add', 'message' : MessageBoard.textField.value}
+		}).done(function(json) {
+            var text = json.by +" said:\n" + json.message;
+            var mess = new Message(text, new Date());
+            var messageID = MessageBoard.messages.push(mess)-1;
+            MessageBoard.renderMessage(messageID);
+            document.getElementById("nrOfMessages").innerHTML = MessageBoard.messages.length;
 		});
     
     },
@@ -69,15 +77,17 @@ var MessageBoard = {
         // Message div
         var div = document.createElement("div");
         div.className = "message";
+        div.setAttribute('data-message-id', messageID);
        
         // Clock button
         aTag = document.createElement("a");
-        aTag.href="#";
+        aTag.href = "#";
+        /*
         aTag.onclick = function(){
 			MessageBoard.showTime(messageID);
 			return false;			
 		}
-        
+        */
         var imgClock = document.createElement("img");
         imgClock.src="pic/clock.png";
         imgClock.alt="Show creation time";
@@ -118,10 +128,40 @@ var MessageBoard = {
          var showTime = "Created "+time.toLocaleDateString()+" at "+time.toLocaleTimeString();
 
          alert(showTime);
-    },
-    logout: function() {
-        window.location = "index.php";
     }
+}
+
+function Message(message, date){
+
+    this.getText = function() {
+        return message;
+    }
+
+    this.setText = function(_text) {
+        message = text;
+    }
+
+    this.getDate = function() {
+        return date;
+    }
+
+    this.setDate = function(_date) {
+        date = date;
+    }
+
+}
+
+Message.prototype.toString = function(){
+    return this.getText()+" ("+this.getDate()+")";
+}
+
+Message.prototype.getHTMLText = function() {
+      
+    return this.getText().replace(/[\n\r]/g, "<br />");
+}
+
+Message.prototype.getDateText = function() {
+    return this.getDate().toLocaleTimeString();
 }
 
 window.onload = MessageBoard.init;
