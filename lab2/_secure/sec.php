@@ -63,3 +63,7 @@ function authUser($u, $p) {
 function generateHash(){
 	return hash('sha512', "123456" + $_SESSION["username"]);
 }
+
+function validateToken($t){
+	return $t === generateHash();
+}

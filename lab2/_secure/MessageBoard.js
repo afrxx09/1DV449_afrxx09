@@ -10,9 +10,7 @@ var MessageBoard = {
 	    MessageBoard.textField = document.getElementById("inputText");
         MessageBoard.messageArea = document.getElementById("messagearea");
 
-        // Add eventhandlers
         document.getElementById("buttonSend").onclick = function(e) {MessageBoard.sendMessage(); return false;}
-
         MessageBoard.textField.onkeypress = function(e){ 
             if(!e) var e = window.event;
             if(e.keyCode == 13 && !e.shiftKey){
@@ -28,40 +26,47 @@ var MessageBoard = {
     },
     getMessages:function() {
         $.ajax({
-			type: "POST",
-			url: "ajax.php",
-			data: {'action': "getMessages"},
+			type: 'POST',
+			url: 'ajax.php',
+			data: {'action': 'getMessages', 'vatoken' : getVaToken()},
             dataType : 'json'
 		}).done(function(json){
-            for(var i in json.messages){
-                var msg = json.messages[i];
-                var text = msg.name +" said:\n" + msg.message;
-                var mess = new Message(text, new Date());
-                var messageID = MessageBoard.messages.push(mess)-1;
-                MessageBoard.renderMessage(messageID);
-            }
-			document.getElementById("nrOfMessages").innerHTML = MessageBoard.messages.length;
+            MessageBoard.getMessagesDone(json);
 		});
     },
-    sendMessage:function(){
-        
-        if(MessageBoard.textField.value == "") return;
-        
-        // Make call to ajax
-        $.ajax({
-			type: "POST",
-		  	url: "ajax.php",
-            //Använd namnet från sessionen istället för att posta det.
-		  	data: {'action' : 'add', 'message' : MessageBoard.textField.value}
-		}).done(function(json) {
-            var text = json.by +" said:\n" + json.message;
+    getMessagesDone : function(json){
+        for(var i in json.messages){
+            var msg = json.messages[i];
+            var text = msg.name +" said:\n" + msg.message;
             var mess = new Message(text, new Date());
             var messageID = MessageBoard.messages.push(mess)-1;
             MessageBoard.renderMessage(messageID);
-            document.getElementById("nrOfMessages").innerHTML = MessageBoard.messages.length;
-		});
-    
+        }
+        MessageBoard.updateMessageCount();
     },
+    sendMessage:function(){
+        
+        if(MessageBoard.textField.value == '') return;
+        
+        // Make call to ajax
+        $.ajax({
+			type: 'POST',
+		  	url: 'ajax.php',
+            //Använd namnet från sessionen istället för att posta det.
+		  	data: {'action' : 'add', 'vatoken' : getVaToken(), 'message' : MessageBoard.textField.value}
+		}).done(function(json) {
+            MessageBoard.sendMessageDone(json);
+		});
+    },
+
+    sendMessageDone : function(){
+        var text = json.by +" said:\n" + json.message;
+        var mess = new Message(text, new Date());
+        var messageID = MessageBoard.messages.push(mess)-1;
+        MessageBoard.renderMessage(messageID);
+        MessageBoard.updateMessageCount();
+    },
+
     renderMessages: function(){
         // Remove all messages
         MessageBoard.messageArea.innerHTML = "";
@@ -71,7 +76,7 @@ var MessageBoard = {
             MessageBoard.renderMessage(i);
         }        
         
-        document.getElementById("nrOfMessages").innerHTML = MessageBoard.messages.length;
+        MessageBoard.updateMessageCount();
     },
     renderMessage: function(messageID){
         // Message div
@@ -113,6 +118,7 @@ var MessageBoard = {
         
         MessageBoard.messageArea.appendChild(div);       
     },
+    /*
     removeMessage: function(messageID){
 		if(window.confirm("Vill du verkligen radera meddelandet?")){
         
@@ -121,6 +127,7 @@ var MessageBoard = {
 			MessageBoard.renderMessages();
         }
     },
+    */
     showTime: function(messageID){
          
          var time = MessageBoard.messages[messageID].getDate();
@@ -128,7 +135,14 @@ var MessageBoard = {
          var showTime = "Created "+time.toLocaleDateString()+" at "+time.toLocaleTimeString();
 
          alert(showTime);
+    },
+    updateMessageCount : function(){
+        document.getElementById("nrOfMessages").innerHTML = MessageBoard.messages.length;
     }
+}
+
+function getVaToken(){
+    return $('meta[name="validation-token"]').attr('content');
 }
 
 function Message(message, date){

@@ -5,26 +5,31 @@
 ###Authentication
 Existerar ej, oavsett om användaren finns i databasen eller inte så släpps man in.
 Så "IsUser"-funktionen antingen returnerar ett userId eller en sträng så kommer if-satsen i "check.php" bli "true". Eller rättare sagt den kommer aldrig bli false.
-Gjort om funktionen så den faktiskt kontrollerar att användaren finns i databasen och lösenorder stämmer.
+Lösning: Gjort om funktionen så den faktiskt kontrollerar att användaren finns i databasen och lösenorder stämmer.
 
 Logout-knappen gör inget mer än att skicka en till startsidan. Alla sessioner är kvar.
 Vem som helst som använder datorn efter att någon försökt "logga ut" kommer in igen.
-Har rättat till logout, lagt det i en egen fil och länkar till den när man klickar på logga ut. 
+
+__Lösning_: Har rättat till logout, lagt det i en egen fil och länkar till den när man klickar på logga ut. 
 
 
 ###Authorization
 "mess.php" kontrollerar aldrig om man är behörig att se sidan och använder inte sessionsvariablerna alls.
 Vem som helst kommer åt applikationen och kan skapa meddelanden.
-Lagt till en login-check på mess.php
+
+__Lösning__: Lagt till en login-check på mess.php
 
 Även de php-filer som anropas via ajax saknar kontroller för autensiering och behörigheter. Till skillnad från mess.php så startas sessionerna här och det finns tillgång till lite säkerhets-funktioner.
 Om en elak användare kommer åt javascripten från applikationen kan den lätt hitta vart alla ajaxanrop skickas och skicka egna anrop dit utan att de kontrolleras om anropen kommer från en inloggad användare.
+
+__Lösning_: Gör logincheck på varje ajaxanrop
 
 ###SQL-injects
 
 "post.php" som lägger till meddelanden i databasen använder varken prepared statements eller tvättar för indatan som postas.
 En användare kan skicka in SQL-kod för att komma åt eller skada databsen.
-Har lagt till prepared statements i SQL-erna.
+
+__Lösning__: Har lagt till prepared statements i alla SQL-erna.
 
 ###XSS
 
@@ -32,27 +37,30 @@ Det är fritt fram för xss-attacker då ingen data tvättas alls varken när de
 Det går att skicka in script-taggar med javascript, men även img-taggar och länkar till skadlig data.
 En elak anvädare kan skicka in javascript-kod som gör att script körs när datan(scripten) presenteras och där med exekveras. Kan exempelvis stjäla sessionen.
 
-All indata tvättas med "htmlentities" som tar bort taggar.
+__Lösning__: All indata tvättas med "htmlentities".
 
 ###CSRF
 
 Applikationen ä helt öppen för csrf-attacker och kan lägga till nya meddelanden om ett sådan script så skulle önska.
 Om någon känner till vår applikation så kan de programmera ett script som försöker skicka massa requests om det skulle vara så att användaren är inloggad.
 
-* Har inte fixat än, men ska lägga till en "validation-token" som skickas med varje request och kontrolleras på servern. 
+__Lösning__: Skapar en token som renderas ut i en meta-tag i headern. Denna skickas med i ajax-anropen och kontrolleras på serversidan.
 
 ###Databasen
 
 Lösenorden är inte hashade och sparade i klartext vilket man märker på hur "IsUser"-funktionen ser ut.
 
-* räcker att nämna? 
+Finns lösenorden i klartext så kan obehöriga se lösenordet om de kommer åt databasen.
 
+__Lösning__: räcker att nämna? Lösenord ska hashas och innan de lagras så det inte går att få fram lösenordet igen. Glöms lösenordet bort så får man nollställa det eller generera ett nytt.
 
 ###GET vs POST
 
-Alla Ajax-anropen görs med GET istället för POST.
+Alla Ajax-anropen görs med GET.
 
-Åtgärdat...
+I vanliga fall är GET sämre för det sparas i historiken, parametrar står i klartext i url:en("Sensitive Data Exposure").
+
+__Lösning__: Ändrat till POST.
 
 ##Moment 2 - Optimering
 

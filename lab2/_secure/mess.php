@@ -5,11 +5,13 @@
 <!DOCTYPE html>
 <html lang="sv">
   <head>
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
+    <meta name="validation-token" content="<?php echo $_SESSION['login_string'] ?>" />
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
     <!-- <link rel="stylesheet" type="text/css" href="css/bootstrap.css" /> -->
     <link rel="stylesheet" type="text/css" href="css/dyn.css" />

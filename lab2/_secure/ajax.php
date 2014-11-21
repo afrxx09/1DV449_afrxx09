@@ -4,7 +4,9 @@ sec_session_start();
 
 $r = array('error' => true);
 $f = isset($_POST['action']) ? htmlentities(trim($_POST['action'])) : null;
-if(checkUser() && $f !== null){
+$v = isset($_POST['vatoken']) ? validateToken($_POST['vatoken']) : null;
+
+if(checkUser() && $f !== null && $v === true){
     switch($f){
     	case 'add':
     		$r = addMessage();
