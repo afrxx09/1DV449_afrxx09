@@ -95,14 +95,17 @@ var MessageBoard = {
 		  	data: {'action' : 'add', 'vatoken' : getVaToken(), 'message' : text},
             dataType: 'json'
 		}).done(function(json) {
-            MessageBoard.sendMessageDone(json);
+            //MessageBoard.sendMessageDone(json);
 		});
     },
     sendMessageDone : function(json){
+        //Behövs inte mer då long polling hämtar in senaste
+        /*
         var mess = new Message(json.id, json.name, json.message, json.created);
         MessageBoard.messages.push(mess);
         MessageBoard.renderMessage(mess);
         MessageBoard.updateMessageCount();
+        */
     },
 
     renderMessages: function(){

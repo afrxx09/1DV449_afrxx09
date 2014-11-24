@@ -8,6 +8,7 @@ $f = isset($_POST['action']) ? htmlentities(trim($_POST['action'])) : null;
 $v = isset($_POST['vatoken']) ? validateToken($_POST['vatoken']) : null;
 
 if(checkUser() && $f !== null && $v === true){
+	session_write_close();
 	$r = check();
 }
 
