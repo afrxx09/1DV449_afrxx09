@@ -157,6 +157,26 @@ Hämtar bootstrap css, bootstrap js och jquery från andra källor.
 
 Cache, gzip och keep-alive och sådana inställningar är ofta påslagna per automatik, min lokala server hade även det.
 
-
-
 ##Moment 3 - Longpoll
+
+Istället för att funktionen getMessages hämtar alla meddelanden när applikationen startas så initieras en "rekursiv" timout-funktion som kallar på sig själv så fort den är klar. Den funktionen skickar ett ajax anrop till servern och frågar efter nya meddelanden. Den håller reda på vad som är nytt genom att skicka med id på det senaste meddelandet som tagit emot. När inga meddelanden finns(när appen startas) så är det id't 0, vilket betyder att alla meddelanden med id högre än 0 hämtas.
+
+På serversidan, så tar programmet emot förfrågan och loopar 30 varv och frågar databasen om det finns några nya poster, om inte så väntar det en sekund och kollar sedan igen. Om det kommer in en ny post under den tiden så avbryts loopen och programmet skickar tilbaka eventuella nya meddelanden. Om det inte kommer några nya posts under loopens livslängd så skickas det tomma svaret tillbaka och scriptet skickar med timeout-funktionen en ny förfrågan som repiterar hela processen.
+
+Nackdelarna med denna taktiken är att scriptet ligger och "idlar" på servern hela tiden fast det oftast inte händer något, men värst av allt är väl att det skickas en sql-query varje skund vilket belastar databsen i "onödan".
+
+Alternativet, att köra "polling" där man instället väntar exempelvis 30 sekunder på klienten mellan varje anrop är snällare mot servern, men det ger inte alls samma effekt hos användaren då de måste vänta så länge mellan varje uppdatering och får inte alls den där "live-känslan".
+
+Största motgången var att komma på varför det inte gick lyssna efter meddelanden samtidigt som man skickade meddelanden. Dessa requests köades upp och det tog ett tag innan man listade ut att det var på grund av sessionen.
+
+##Moment 4 - Websockets
+
+Denna var klurig. Det finns små ramverk och biliotek för websockets i php, men det är svårt att hitta vettig information om hur dessa fungerar. Jag ville inte använda ett helt ramverk för att lösa uppgiften för det kändes som "fusk", ett exempel är "Rachet". Jag ville ha en så clean och minimalistisk lösning som möjligt för att förstå hur det fungerar. Först ville jag göra allt själv men insåg att det är ett ganska stort jobb att skriva en websocket-server.
+
+Efter mycket läsning, tutorials som inte var kompletta och experimenterande så lyckades jag få igång en demo-appliaktion med [PHP-webbsocket](https://github.com/ghedipunk/PHP-Websockets) som faktiskt verkade fungera. Denna var dock inte så dynamisk då servern endast kunde ta emot rena strings och skicka tillbaka dem direkt till samma användare igen.
+
+Efter lite trixande så kom jag på att jag kunde skicka json-objekt som strängar och köra decode på dem i php och på så sätt skicka mer komplexa objekt till servern. På så sätt kunde jag skicka olika events från javascripten med olika nyklar och tolka dem på server-sidan för att utföra olika saker. I detta fallet läsa meddelanden vilket man måste göra när applikationen startas och skicka meddelanden. Nya meddelanden som skickas efter att applikationen startats pushas ut automatiskt, som resultat av send-funktionen så dessa behövs aldrig hämtas eller frågas efter.
+
+Vad jag inte har koll på i nuläget är säkerheten. När, var och hur ska jag kontrollera att användaren är inloggad, kontrollera rättigheter samt kontrollera in- och ut-datan. Går det xxs'a, csrf'a, stjäla sessioner med mera? troligtvis de två förstnämnda, sessioner vet jag inte alls hur det fungerar då det sker "handskakning" i uppkopplingen.
+
+Till sist ska jag nämna att jag inte har möjlighet att lägga upp detta live, då det krävs tillgång till en terminal och att kunna köra individuella instanser av PHP med server-scriptet. Jag har helt enkelt inte rättigheter att starta mitt websocket-server-script på mitt nuvarande webhotell.
