@@ -9,4 +9,7 @@
 
 [Länk till Rapport](https://github.com/afrxx09/1DV449_afrxx09/blob/master/reflektion_lab2.md)
 
-Länk till live version: # (http://www.aegzor.se/1dv449/lab2/)
+Länk till live versioner:
+[Orginalet](http://aegzor.se/1dv449/lab2/_original/)
+[Optimerad](http://aegzor.se/1dv449/lab2/_optimerad/)
+[Säkerhet](http://aegzor.se/1dv449/lab2/_secure/)
