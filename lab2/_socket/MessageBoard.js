@@ -1,25 +1,27 @@
 var MessageBoard = {
     
     t : null,
+    socket : null,
     messages: [],
     textField: null,
     messageArea: null,
 
     init:function(e)
     {
-        MessageBoard.messageChecker();
+        if(MessageBoard.initSocket()){
+            MessageBoard.socketSend();
+        }
+        else{
+            MessageBoard.messageChecker();
+            MessageBoard.BindSend();
+        }
+        /** Utan long polling */
         //MessageBoard.getMessages();
 	    MessageBoard.textField = document.getElementById("inputText");
         MessageBoard.messageArea = document.getElementById("messagearea");
 
-        document.getElementById("buttonSend").onclick = function(e) {MessageBoard.sendMessage(); return false;}
-        MessageBoard.textField.onkeypress = function(e){ 
-            if(!e) var e = window.event;
-            if(e.keyCode == 13 && !e.shiftKey){
-                MessageBoard.sendMessage(); 
-                return false;
-            }
-        }
+        
+
         $('#messagearea').on('click', '.show-time', function(e){
             var id = $(e.target).closest('.message').data('message-id');
             MessageBoard.showTime(id);
@@ -33,6 +35,75 @@ var MessageBoard = {
             }
         });
         */
+    },
+    BindSend : function(){
+        $('buttonSend').on('click', function(e){
+            MessageBoard.sendMessage();
+            return false;
+        });
+        $('#inputText').on('keypress', function(e){
+            if(!e) var e = window.event;
+            if(e.keyCode == 13 && !e.shiftKey){
+                MessageBoard.sendMessage(); 
+                return false;
+            }
+        });
+    },
+    initSocket : function(){
+        /** Låtsas-fail */
+        return false;
+        var host = "ws://localhost:9000/"; // SET THIS TO YOUR SERVER
+        try {
+            this.socket = new WebSocket(host);
+
+            console.log('WebSocket - status '+ this.socket.readyState);
+
+            this.socket.onopen = function(msg){ 
+                console.log("Welcome - status "+ this.readyState); 
+                MessageBoard.socketGet();
+            };
+            this.socket.onmessage = function(msg) { 
+                //console.log(msg.data);
+                MessageBoard.socketCallback(msg.data); 
+            };
+            this.socket.onclose   = function(msg) { 
+               console.log("Disconnected - status "+this.readyState); 
+           };
+           return true;
+        }
+        catch(ex){ 
+            return false;
+        }
+        return false;
+    },
+    socketGet : function(){
+        var data = {
+            'action' : 'get'
+        };
+        this.socket.send(JSON.stringify(data));
+    },
+    socketSend : function(){
+        var self = this;
+        document.getElementById("buttonSend").onclick = function(e) {
+            var mess = '' + MessageBoard.textField.value;
+
+            var data = {
+                'action' : 'post',
+                'message' : mess
+            };
+            self.socket.send(JSON.stringify(data));
+        }
+    },
+    socketCallback : function(data){
+        var json = JSON.parse(data)
+        console.log(json);
+        for(var i in json.messages){
+            var msg = json.messages[i];
+
+            var mess = new Message(msg.id, msg.name, msg.message, msg.created);
+            MessageBoard.messages.push(mess);
+            MessageBoard.renderMessage(mess);
+        }
     },
     messageChecker:function(){
         var lastId = 0;
