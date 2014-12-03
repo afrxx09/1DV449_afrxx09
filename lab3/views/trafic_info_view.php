@@ -1,7 +1,7 @@
 <?php
 
 class TraficInfoView{
-	public function index($traficInfo){
+	public function index($traficInfo, $lastUpdated){
 		$r = '';
 		foreach($traficInfo as $ti){
 			$r .= '
@@ -13,7 +13,13 @@ class TraficInfoView{
 		}
 		return '
 			<div>
-				' . $r . '
+				<h3>
+					Senast uppdaterad<br />
+					' . $lastUpdated . '
+				</h3>
+				<div>
+					' . $r . '
+				</div>
 			</div>
 		';
 	}

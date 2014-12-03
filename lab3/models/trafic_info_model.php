@@ -11,4 +11,8 @@ class TraficInfoModel{
 	public function getTraficInfo(){
 		return $this->service->getTraficInfo();
 	}
+	
+	public function getLastUpdated(){
+		return $this->service->getLastUpdated();
+	}
 }

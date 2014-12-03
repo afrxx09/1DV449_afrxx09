@@ -1,0 +1,41 @@
+html *,
+body *{
+	margin:0;
+	padding:0;
+	font-family: 'Roboto', sans-serif;
+}
+
+.clear{
+	clear:both;
+}
+
+#wrap{
+	width:1200px;
+	margin:0 auto;
+}
+
+#header{
+	padding:10px;
+	background-color:#44e;
+}
+
+#footer{
+	padding:10px;
+	background-color:#44e;
+}
+
+#content-left{
+	float:left;
+	width:200px;
+	padding:10px;
+}
+
+#content-right{
+	float:left;
+	width:960px;
+	padding:10px;
+}
+
+#map-container{
+	min-height:600px;
+}

@@ -3,13 +3,18 @@
 class LayoutView{
 
 	public function render($html){
+		$api_key = file_get_contents(ROOT_DIR . 'data' . DS . 'google-maps-api-key.txt');
+		
 		echo '
-			<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-			<html xmlns="http://www.w3.org/1999/xhtml">
+			<!DOCTYPE html>
+			<html>
 
 				<head>
 					<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 					<title>Test application build with framework</title>
+					<link href="//fonts.googleapis.com/css?family=Roboto:400,400italic,700,700italic,500,500italic,300,300italic" rel="stylesheet" type="text/css">
+					<link rel="stylesheet" type="text/css" href="pub/style.css" />
+					
 				</head>
 
 				<body>
@@ -21,7 +26,13 @@ class LayoutView{
 						</div>
 						
 						<div id="content">
-							' . $html . '
+							<div id="content-left">
+								' . $html . '
+							</div>
+							<div id="content-right">
+								<div id="map-container"></div>
+							</div>
+							<div class="clear"></div>
 						</div>
 
 						<div id="footer">
@@ -29,7 +40,9 @@ class LayoutView{
 						</div>
 						
 					</div>
-
+					
+					<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=' . $api_key . '"></script>
+					<script type="text/javascript" src="pub/script.js"></script>
 				</body>
 
 			</html>

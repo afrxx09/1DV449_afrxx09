@@ -19,7 +19,6 @@ class TraficInfoService{
 		$file = ROOT_DIR . 'data' . DS . $this->file;
 		$mod = (time() - filemtime($file));
 		if(file_exists($file) && $mod < 360){
-			var_dump('läser gammal');
 			$this->rawData = file_get_contents($file);
 		}
 		else{
@@ -51,5 +50,10 @@ class TraficInfoService{
 		    return strcmp($b->id, $a->id);
 		});
 		return $r;
+	}
+	
+	public function getLastUpdated(){
+		$time = filemtime(ROOT_DIR . 'data' . DS . $this->file);
+		return date('Y-m-d H:i:s', $time);
 	}
 }
