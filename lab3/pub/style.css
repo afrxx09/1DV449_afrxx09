@@ -15,12 +15,12 @@ body *{
 }
 
 #header{
-	padding:10px;
+	padding:0 10px;
 	background-color:#44e;
 }
 
 #footer{
-	padding:10px;
+	padding:0 10px;
 	background-color:#44e;
 }
 
@@ -37,5 +37,5 @@ body *{
 }
 
 #map-container{
-	min-height:600px;
+	min-height:500px;
 }

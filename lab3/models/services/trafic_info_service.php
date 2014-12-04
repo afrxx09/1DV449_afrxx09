@@ -17,8 +17,7 @@ class TraficInfoService{
 	
 	public function getData(){
 		$file = ROOT_DIR . 'data' . DS . $this->file;
-		$mod = (time() - filemtime($file));
-		if(file_exists($file) && $mod < 360){
+		if(file_exists($file) && ((time() - filemtime($file) < 600) )){
 			$this->rawData = file_get_contents($file);
 		}
 		else{

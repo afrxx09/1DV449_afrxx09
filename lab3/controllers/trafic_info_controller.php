@@ -11,10 +11,8 @@ class TraficInfoController{
 		$this->view = new TraficInfoView();
 	}
 	
-	public function index(){
-		$traficInfo = $this->model->getTraficInfo();
-		$lastUpdated = $this->model->getLastUpdated();
-		return $this->view->index($traficInfo, $lastUpdated);
+	public function getAll(){
+		return $this->model->getTraficInfo();
 	}
 
 	public function create(){
