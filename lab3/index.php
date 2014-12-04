@@ -20,13 +20,26 @@ $api_key = file_get_contents('data' . DIRECTORY_SEPARATOR . 'google-maps-api-key
 				<h1>Trafikinfo</h1>
 			</div>
 			
+			<div id="category-filter">
+				<ul>
+					<li data-category-filter="-1" class="active">Alla</li>
+					<li data-category-filter="0">Vägtrafik</li>
+					<li data-category-filter="1">Kollektivtrafik</li>
+					<li data-category-filter="2">Planerad störning</li>
+					<li data-category-filter="3">Övrigt</li>
+				</ul>
+			</div>
+			
 			<div id="content">
 				<div id="content-left">
-					left
+				
+					<ul id="location-list">
+						
+					</ul>
 				</div>
 				<div id="content-right">
 					<div id="map-container">
-
+					
 					</div>
 				</div>
 				<div class="clear"></div>

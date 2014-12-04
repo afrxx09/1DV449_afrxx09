@@ -3,7 +3,7 @@ require_once(ROOT_DIR . 'models' . DS . 'entities' . DS . 'trafic_info.php');
 
 class TraficInfoService{
 	private $format = 'json';
-	private $size = 5;
+	private $size = 100;
 	private $url = 'http://api.sr.se/api/v2/traffic/messages';
 	private $file = 'trafic_info.json';
 	private $rawData;
@@ -21,7 +21,6 @@ class TraficInfoService{
 			$this->rawData = file_get_contents($file);
 		}
 		else{
-			var_dump('skapar ny');
 			$url = $this->url . '?format=' . $this->format . '&size=' . $this->size;
 			$ch = curl_init();
 			curl_setopt($ch, CURLOPT_URL, $url);
