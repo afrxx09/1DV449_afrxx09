@@ -1,13 +1,13 @@
 var TI = {
 	map : null,
-	markers : [],
+	infoWindow : null,
 	locations : [],
 	categoryFilter : -1,
 	
 	init : function(){
 		this.map = new google.maps.Map(document.getElementById('map-container'), gmap.mapOptions);
 		this.map.setOptions({styles: gmap.styles});
-
+		this.infoWindow = new google.maps.InfoWindow();
 		this.binds();
 		this.getAll();
 	},
@@ -21,6 +21,8 @@ var TI = {
 		});
 		$('#location-list').on('click', 'li', function(){
 			$(this).siblings('.active').removeClass('active');
+			var markerId = parseInt($(this).data('marker-id'));
+			google.maps.event.trigger(self.locations[markerId].marker, 'click');
 			$(this).addClass('active');
 		});
 	},
@@ -40,48 +42,57 @@ var TI = {
 		var i, location, contentString, latlng;
 		for(i = 0; i < json.length; i++){
 			location = json[i];
-			
-			latlng = new google.maps.LatLng(location.latitude, location.longitude);
-			location.marker = new google.maps.Marker({
-				position: latlng,
-				title: 'asd'
-			});
-			
-			/*
-			google.maps.event.addListener(location.marker, 'click', function(){
-				location.infoWindow.open(self.map, this);
-			});
-			*/
-			contentString = '' +
-				'<h3>' + location.title + '</h3>' +
-				'<p>' + location.createddate + '</p>' +
-				'<p>' + location.description + '</p>' +
-				'<p>' + location.exactlocation + '</p>' +
-				'';
-			infoWindow = new google.maps.InfoWindow();
-			google.maps.event.addListener(location.marker,'click', (function(m, cs, iw){
-				return function() {
-					if(iw){iw.close();}
-					iw.setContent(cs);
-					iw.open(self.map, m);
-				};
-			})(location.marker, contentString, infoWindow)); 
-			
+			location.marker = this.createMarker(location);
 			this.locations.push(location);
 		}
 		this.renderList();
 	},
+	createMarker : function(location){
+		var self = this;
+		var latlng = new google.maps.LatLng(location.latitude, location.longitude);
+		var marker = new google.maps.Marker({
+			position : latlng,
+			animation : google.maps.Animation.DROP
+		});
+		google.maps.event.addListener(marker,'click', function(){
+			self.openInfoWindow(this, location);
+		});
+		return marker;
+	},
+	openInfoWindow : function(marker, location){
+		this.infoWindow.close();
+		this.infoWindow.setContent(this.getInfoWindowContent(location));
+		this.infoWindow.open(this.map, marker);
+	},
+	getInfoWindowContent : function(location){
+		var contentString = '' +
+			'<h3>' + location.title + '</h3>' +
+			'<p>' + location.createddate + '</p>' +
+			'<p>' + location.description + '</p>' +
+			'<p>' + location.exactlocation + '</p>' +
+			'';
+		return contentString;
+	},
 	renderList : function(){
 		var locationList = '';
+		var self = this;
 		for(var i = 0; i < this.locations.length; i++){
 			var l = this.locations[i];
 			l.marker.setMap(null);
 			if(this.categoryFilter === -1 || this.categoryFilter === l.category){
-				locationList += '<li>' +  l.title + '</li>';
-				l.marker.setMap(this.map);
+				locationList += '<li data-marker-id="'+ i +'">' +  l.title + '</li>';
+				self.addMarker(i);
 			}
 		}
 		$('#location-list').html(locationList);
+	},
+	addMarker : function(i){
+		var self = this;
+		(function(j){
+			setTimeout(function(){
+				self.locations[i].marker.setMap(self.map);
+			}, j * 20);
+		})(i);
 	}
 };
 
