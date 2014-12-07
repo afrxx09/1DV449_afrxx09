@@ -70,6 +70,7 @@ body *{
 
 /*Location List*/
 #location-list{
+	position:relative;
 	list-style:none;
 }
 
