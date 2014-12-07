@@ -3,7 +3,9 @@ var TI = {
 	infoWindow : null,
 	locations : [],
 	categoryFilter : -1,
-	
+	initDone : false,
+	//priorityColors : ['#BA2C00', '#D97F00', '#DEB800', '#AADB00', '#00BA23'],
+	priorityColors : ['red', 'orange', 'yellow', 'green', 'blue'],
 	init : function(){
 		this.map = new google.maps.Map(document.getElementById('map-container'), gmap.mapOptions);
 		this.map.setOptions({styles: gmap.styles});
@@ -46,32 +48,53 @@ var TI = {
 			this.locations.push(location);
 		}
 		this.renderList();
+		this.initDone = true;
 	},
 	createMarker : function(location){
 		var self = this;
+		var icon = 'http://maps.google.com/mapfiles/ms/icons/' + this.priorityColors[location.priority - 1] + '.png';
 		var latlng = new google.maps.LatLng(location.latitude, location.longitude);
 		var marker = new google.maps.Marker({
 			position : latlng,
-			animation : google.maps.Animation.DROP
+			animation : google.maps.Animation.DROP,
+			icon: new google.maps.MarkerImage(icon)
 		});
 		google.maps.event.addListener(marker,'click', function(){
 			self.openInfoWindow(this, location);
+			self.toggleActiveMarker(this, location);
 		});
 		return marker;
 	},
 	openInfoWindow : function(marker, location){
-		this.infoWindow.close();
-		this.infoWindow.setContent(this.getInfoWindowContent(location));
-		this.infoWindow.open(this.map, marker);
+		var newContent = this.getInfoWindowContent(location);
+		if(this.infoWindow.getContent() == null || this.infoWindow.getContent() != newContent){
+			this.infoWindow.close();
+			this.infoWindow.setContent(newContent);
+			this.infoWindow.open(this.map, marker);
+		}
 	},
 	getInfoWindowContent : function(location){
 		var contentString = '' +
-			'<h3>' + location.title + '</h3>' +
-			'<p>' + location.createddate + '</p>' +
-			'<p>' + location.description + '</p>' +
-			'<p>' + location.exactlocation + '</p>' +
+			'<div class="info-window">' +
+				'<h3 class="info-window-header">' + location.title + '</h3>' +
+				'<p class="info-window-date">' + location.createddate + '</p>' +
+				'<p class="info-window-description">' + location.description + '</p>' +
+				'<p class="info-window-exact-location">' + location.exactlocation + '</p>' +
+			'</div>'
 			'';
 		return contentString;
+	},
+	toggleActiveMarker : function(marker, location){
+			for(var i = 0; i < this.locations.length; i++){
+				if(this.locations[i].marker !== marker){
+					this.locations[i].marker.setAnimation(null);
+					this.locations[i].marker.setIcon('http://maps.google.com/mapfiles/ms/icons/' + this.priorityColors[this.locations[i].priority - 1] + '.png');
+				}
+			}
+			if(marker.getAnimation() === null){
+				marker.setAnimation(google.maps.Animation.BOUNCE);
+				marker.setIcon('http://maps.google.com/mapfiles/ms/icons/pink.png');
+			}
 	},
 	renderList : function(){
 		var locationList = '';
@@ -87,12 +110,17 @@ var TI = {
 		$('#location-list').html(locationList);
 	},
 	addMarker : function(i){
-		var self = this;
-		(function(j){
-			setTimeout(function(){
-				self.locations[i].marker.setMap(self.map);
-			}, j * 20);
-		})(i);
+		if(!this.initDone){
+			var self = this;
+			(function(j){
+				setTimeout(function(){
+					self.locations[i].marker.setMap(self.map);
+				}, j * Math.floor((Math.random() * 25) + 1));
+			})(i);
+		}
+		else{
+			this.locations[i].marker.setMap(this.map);
+		}
 	}
 };
 

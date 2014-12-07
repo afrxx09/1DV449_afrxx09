@@ -6,7 +6,7 @@ $api_key = file_get_contents('data' . DIRECTORY_SEPARATOR . 'google-maps-api-key
 
 	<head>
 		<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-		<title>Test application build with framework</title>
+		<title>Trafikinformation</title>
 		<link href="//fonts.googleapis.com/css?family=Roboto:400,400italic,700,700italic,500,500italic,300,300italic" rel="stylesheet" type="text/css">
 		<link rel="stylesheet" type="text/css" href="pub/style.css" />
 		
@@ -17,7 +17,7 @@ $api_key = file_get_contents('data' . DIRECTORY_SEPARATOR . 'google-maps-api-key
 		<div id="wrap">
 			
 			<div id="header">
-				<h1>Trafikinfo</h1>
+				<h1>Trafikinformation</h1>
 			</div>
 			
 			<div id="category-filter">
@@ -46,7 +46,8 @@ $api_key = file_get_contents('data' . DIRECTORY_SEPARATOR . 'google-maps-api-key
 			</div>
 
 			<div id="footer">
-				<p>footer</p>
+				<p>Laboration 3, Webbteknik II (1DV449)</p>
+				<p>Andreas Fridlund - afrxx09</p>
 			</div>
 			
 		</div>

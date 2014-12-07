@@ -3,12 +3,8 @@ body *{
 	margin:0;
 	padding:0;
 	font-family: 'Roboto', sans-serif;
-	font-size:.9em;
 }
 
-p{
-	font-size:.9em;
-}
 .clear{
 	clear:both;
 }
@@ -33,16 +29,19 @@ p{
 	float:left;
 	width:200px;
 	padding:10px;
+	height:600px;
+	overflow-y:scroll;
 }
 
 #content-right{
 	float:left;
 	width:960px;
+	height:600px;
 	padding:10px;
 }
 
 #map-container{
-	min-height:500px;
+	height:100%;
 }
 
 /* Category Filter List*/
@@ -88,4 +87,23 @@ p{
 
 #location-list li.active{
 	background-color:#beb;	
+}
+
+/**/
+
+.info-window{
+	
+}
+
+.info-window-header{
+	
+}
+.info-window-date{
+	
+}
+.info-window-description{
+	
+}
+.info-window-exact-location{
+	
 }
