@@ -22,10 +22,8 @@ var TI = {
 			self.renderList();
 		});
 		$('#location-list').on('click', 'li', function(){
-			//$(this).siblings('.active').removeClass('active');
 			var markerId = parseInt($(this).data('marker-id'));
 			google.maps.event.trigger(self.locations[markerId].marker, 'click');
-			//$(this).toggleClass('active');
 		});
 	},
 	getAll : function() {
