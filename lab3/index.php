@@ -28,11 +28,15 @@ $api_key = file_get_contents('data' . DIRECTORY_SEPARATOR . 'google-maps-api-key
 					<li data-category-filter="2">Planerad störning</li>
 					<li data-category-filter="3">Övrigt</li>
 				</ul>
+				<p style="float:right;">Senast uppdaterad: <span id="location-list-last-update"></span></p>
+				<div class="clear"></div>
 			</div>
 			
 			<div id="content">
 				<div id="content-left">
-				
+					<div id="location-list-loading">
+						<p>Loading ...</p>
+					</div>
 					<ul id="location-list">
 						
 					</ul>

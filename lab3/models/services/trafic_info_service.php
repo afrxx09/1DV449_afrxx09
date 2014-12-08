@@ -3,7 +3,8 @@ require_once(ROOT_DIR . 'models' . DS . 'entities' . DS . 'trafic_info.php');
 
 class TraficInfoService{
 	private $format = 'json';
-	private $size = 100;
+	private $requestSize = 1000;
+	private $returnSize = 100;
 	private $url = 'http://api.sr.se/api/v2/traffic/messages';
 	private $file = 'trafic_info.json';
 	private $rawData;
@@ -21,7 +22,7 @@ class TraficInfoService{
 			$this->rawData = file_get_contents($file);
 		}
 		else{
-			$url = $this->url . '?format=' . $this->format . '&size=' . $this->size;
+			$url = $this->url . '?format=' . $this->format . '&size=' . $this->requestSize;
 			$ch = curl_init();
 			curl_setopt($ch, CURLOPT_URL, $url);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -47,6 +48,7 @@ class TraficInfoService{
 		usort($r, function($a, $b){
 		    return strcmp($b->id, $a->id);
 		});
+		$r = array_slice($r, 0, $this->returnSize); 
 		return $r;
 	}
 	

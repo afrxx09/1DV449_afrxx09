@@ -12,7 +12,7 @@ class TraficInfoController{
 	}
 	
 	public function getAll(){
-		return $this->model->getTraficInfo();
+		return array('lastUpdate' => $this->model->getLastUpdated(), 'messages' => $this->model->getTraficInfo());
 	}
 
 	public function create(){

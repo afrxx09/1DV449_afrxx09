@@ -28,4 +28,4 @@ class TraficInfo{
 		$createddate = explode('+', preg_replace('/[^0-9,.+]/', '', $json->createddate));
 		$this->createddate = date('Y-m-d H:i:s', intval($createddate[0]/1000));
 	}
-}FILTER_SANITIZE_SPECIAL_CHARS
+}

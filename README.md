@@ -13,3 +13,8 @@ Länk till live versioner:
 [Orginalet](http://aegzor.se/1dv449/lab2/_original/)
 [Optimerad](http://aegzor.se/1dv449/lab2/_optimerad/)
 [Säkerhet](http://aegzor.se/1dv449/lab2/_secure/)
+
+##Laboration 3 - Mashup
+
+[Länk till reflektion](https://github.com/afrxx09/1DV449_afrxx09/blob/master/reflektion_lab3.md)
+[live version](http://aegzor.se/1dv449/lab3/)

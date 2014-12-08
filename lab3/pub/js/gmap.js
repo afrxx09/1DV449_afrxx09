@@ -1,7 +1,7 @@
 var gmap = {
 	mapOptions : {
 		'center': { lat: 63.0987472, lng: 16.5279964},
-		'zoom': 5,
+		'zoom': 4,
 		'streetViewControl': false,
 		'panControl': false,
 		'overviewMapControl': false,

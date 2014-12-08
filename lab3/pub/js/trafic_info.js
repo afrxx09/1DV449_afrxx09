@@ -5,7 +5,7 @@ var TI = {
 	categoryFilter : -1,
 	initDone : false,
 	//priorityColors : ['#BA2C00', '#D97F00', '#DEB800', '#AADB00', '#00BA23'],
-	priorityColors : ['red', 'orange', 'yellow', 'green', 'blue'],
+	priorityColors : ['red-dot', 'orange-dot', 'yellow-dot', 'purple-dot', 'blue-dot'],
 	init : function(){
 		this.map = new google.maps.Map(document.getElementById('map-container'), gmap.mapOptions);
 		this.map.setOptions({styles: gmap.styles});
@@ -40,13 +40,17 @@ var TI = {
 	getAllDone : function(json){
 		var self = this;
 		var i, location, contentString, latlng;
-		for(i = 0; i < json.length; i++){
-			location = json[i];
+		for(i = 0; i < json.messages.length; i++){
+			location = json.messages[i];
 			location.marker = this.createMarker(location);
 			this.locations.push(location);
 		}
 		this.renderList();
 		this.initDone = true;
+		$('#location-list-last-update').html(json.lastUpdate);
+		$('#location-list-loading').fadeOut(450, function(){
+			$('#location-list').fadeIn(450);
+		});
 	},
 	createMarker : function(location){
 		var self = this;
@@ -59,7 +63,6 @@ var TI = {
 			icon: new google.maps.MarkerImage(icon)
 		});
 		google.maps.event.addListener(marker,'click', function(){
-			
 			self.toggleActiveMarker(this, location, id);
 		});
 		return marker;
@@ -69,16 +72,16 @@ var TI = {
 			if(marker.getAnimation() === null){
 				this.clearActiveMarkers(marker);
 				var li = $('#location-list li[data-marker-id="' + id + '"]');
-				console.log(li);
 				li.addClass('active');
-				console.log(li);
-				$('#content-left').animate({
-					scrollTop: (li.offset().top - 200)
-				}, 400);
+				
 				marker.setAnimation(google.maps.Animation.BOUNCE);
-				marker.setIcon('http://maps.google.com/mapfiles/ms/icons/pink.png');
+				marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png');
 				this.infoWindow.setContent(this.getInfoWindowContent(location));
 				this.infoWindow.open(this.map, marker);
+				var list = $('#content-left');
+				list.animate({
+					scrollTop: li.offset().top - list.offset().top + list.scrollTop() - (list.height() / 2) + (li.height() / 2)
+				}, 500);
 			}
 			else{
 				marker.setAnimation(null);
@@ -125,7 +128,7 @@ var TI = {
 			(function(j){
 				setTimeout(function(){
 					self.locations[i].marker.setMap(self.map);
-				}, j * Math.floor((Math.random() * 25) + 1));
+				}, j * Math.floor((Math.random() * 20) + 1));
 			})(i);
 		}
 		else{
